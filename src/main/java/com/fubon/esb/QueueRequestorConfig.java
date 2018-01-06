@@ -52,7 +52,8 @@ public class QueueRequestorConfig {
 		container.setConnectionFactory(queueConnectionFactory);
 		container.setDestination(parseToTxtQueue);
 		container.setMessageListener(parseToTxtMessageRequestor);
-
+		container.setConcurrency( "20-30" );
+		
 		return container;
 	}
 
@@ -62,7 +63,8 @@ public class QueueRequestorConfig {
 		container.setConnectionFactory(queueConnectionFactory);
 		container.setDestination(parseToTxt_1_Queue);
 		container.setMessageListener(parseToTxtMessageRequestor);
-
+		container.setConcurrency( "20-30" );
+		
 		return container;
 	}
 
@@ -72,7 +74,8 @@ public class QueueRequestorConfig {
 		container.setConnectionFactory(queueConnectionFactory);
 		container.setDestination(renderToTxtQueue);
 		container.setMessageListener(renderToTxtMessageRequestor);
-
+		container.setConcurrency( "20-30" );
+		
 		return container;
 	}
 
@@ -82,7 +85,8 @@ public class QueueRequestorConfig {
 		container.setConnectionFactory(queueConnectionFactory);
 		container.setDestination(renderToTxt_1_Queue);
 		container.setMessageListener(renderToTxtMessageRequestor);
-
+		container.setConcurrency( "20-30" );
+		
 		return container;
 	}
 
@@ -92,7 +96,8 @@ public class QueueRequestorConfig {
 		container.setConnectionFactory(queueConnectionFactory);
 		container.setDestination(renderToXmlQueue);
 		container.setMessageListener(renderToXmlMessageReuqestor);
-
+		container.setConcurrency( "20-30" );
+		
 		return container;
 	}
 
@@ -102,7 +107,8 @@ public class QueueRequestorConfig {
 		container.setConnectionFactory(queueConnectionFactory);
 		container.setDestination(renderToXml_1_Queue);
 		container.setMessageListener(renderToTxtMessageRequestor);
-
+		container.setConcurrency( "20-30" );
+		
 		return container;
 	}
 }
