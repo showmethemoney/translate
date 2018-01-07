@@ -1,4 +1,4 @@
-package com.fubon.esb.translate.parse;
+package com.fubon.esb.translate;
 
 import com.fubon.esb.bean.TransactionMessage;
 

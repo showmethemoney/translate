@@ -13,7 +13,8 @@ public class WebInitializer implements WebApplicationInitializer {
 	@Override
 	public void onStartup(ServletContext container) throws ServletException {
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		context.register(AppConfig.class, MessageQueueFactoryConfig.class, QueueConfig.class, QueueRequestorConfig.class);
+//		context.register(AppConfig.class, MessageQueueFactoryConfig.class, QueueConfig.class, QueueRequestorConfig.class);
+		context.register(AppConfig.class, MessageQueueFactoryConfig.class, QueueRequestorConfig.class);
 		context.setServletContext(container);
 
 		ServletRegistration.Dynamic registration = container.addServlet("dispatcher", new DispatcherServlet(context));

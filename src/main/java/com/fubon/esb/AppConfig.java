@@ -8,15 +8,16 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 @Configuration
 @ComponentScan(basePackages = "com.fubon.esb")
-public class AppConfig {
+public class AppConfig
+{
 
 	private static final String NAMED_REFLECTION_MESSAGE_PACKAGE = "com.fubon.esb.bean";
-	
+
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertyConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
-	
+
 	@Bean
 	public Jaxb2Marshaller jaxb2Marshaller() {
 		Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();

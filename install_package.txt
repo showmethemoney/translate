@@ -1,0 +1,2 @@
+mvn install:install-file -Dfile=H:\DevelopmentTool\fubon-esb-project\PROD\fubon-esb-transform\lib\tibjms.jar -DgroupId=com.tibco -DartifactId=tibjms -Dversion=1.0.0 -Dpackaging=jar
+mvn install:install-file -Dfile=H:\DevelopmentTool\fubon-esb-project\PROD\fubon-esb-transform\lib\tibjmsadmin.jar -DgroupId=com.tibco -DartifactId=tibjmsadmin -Dversion=1.0.0 -Dpackaging=jar

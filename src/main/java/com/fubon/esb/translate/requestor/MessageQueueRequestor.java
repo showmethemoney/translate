@@ -8,9 +8,9 @@ import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.QueueSession;
 import javax.jms.TextMessage;
-import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,12 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import com.fubon.esb.MessageQueueFactoryConfig;
 import com.fubon.esb.bean.TransactionMessage;
-import com.fubon.esb.translate.parse.TransformContent;
+import com.fubon.esb.translate.TransformContent;
 
-public abstract class MessageQueueRequestor implements MessageListener {
+public abstract class MessageQueueRequestor implements MessageListener
+{
 
-	protected static final Logger logger = LoggerFactory.getLogger(MessageQueueRequestor.class);
+	protected static final Logger logger = LoggerFactory.getLogger( MessageQueueRequestor.class );
 	private TransformContent transformer = null;
 	@Autowired
 	@Qualifier(MessageQueueFactoryConfig.NAMED_QUEUE_SESSION)
@@ -35,18 +36,24 @@ public abstract class MessageQueueRequestor implements MessageListener {
 	public void onMessage(Message message) {
 		try {
 			if (message instanceof TextMessage) {
+				StopWatch stopWatch = new StopWatch();
+				stopWatch.start();
+
 				TransactionMessage instance = null;
 
-				instance = ((JAXBElement<TransactionMessage>) marshaller.unmarshal(new StreamSource(new StringReader(((TextMessage) message).getText())))).getValue();
+				instance = (TransactionMessage) marshaller.unmarshal( new StreamSource( new StringReader( ((TextMessage) message).getText() ) ) );
 
-				String result = transformer.transform(instance);
+				String result = transformer.transform( instance );
 
-				MessageProducer producer = session.createProducer((Queue) message.getJMSReplyTo());
-				TextMessage replyMessage = session.createTextMessage(result);
-				producer.send(replyMessage);
+				stopWatch.stop();
+				logger.info( "Time : {} - {} - {}", stopWatch.getTime(), (Queue) message.getJMSReplyTo(), result );
+
+				MessageProducer producer = session.createProducer( (Queue) message.getJMSReplyTo() );
+				TextMessage replyMessage = session.createTextMessage( result );
+				producer.send( replyMessage );
 			}
 		} catch (Throwable cause) {
-			logger.error(cause.getMessage(), cause);
+			logger.error( cause.getMessage(), cause );
 		}
 	}
 

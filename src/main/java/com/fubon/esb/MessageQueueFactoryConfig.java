@@ -10,9 +10,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 
+import com.tibco.tibjms.TibjmsQueueConnectionFactory;
+
 @Configuration
 @PropertySources({ @PropertySource("classpath:ems.properties") })
-public class MessageQueueFactoryConfig {
+public class MessageQueueFactoryConfig
+{
 
 	public static final String NAMED_QUEUE_CONNECTION_FACTORY = "QueueConnectionFactory";
 	public static final String NAMED_QUEUE_SESSION = "queueSession";
@@ -22,14 +25,13 @@ public class MessageQueueFactoryConfig {
 
 	@Bean(NAMED_QUEUE_CONNECTION_FACTORY)
 	public QueueConnectionFactory queueConnectionFactory() {
-		// QueueConnectionFactory factory = new TibjmsQueueConnectionFactory(
-		// env.getProperty( "queue.connection.url" ) );
-		// return factory.createQueueConnection( "", "" );
-		return null;
+		QueueConnectionFactory factory = new TibjmsQueueConnectionFactory( env.getProperty( "queue.connection.url" ) );
+		
+		return factory;
 	}
 
 	@Bean(NAMED_QUEUE_SESSION)
 	public QueueSession queueSession() throws Throwable {
-		return queueConnectionFactory().createQueueConnection("", "").createQueueSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+		return queueConnectionFactory().createQueueConnection( "", "" ).createQueueSession( false, javax.jms.Session.AUTO_ACKNOWLEDGE );
 	}
 }
